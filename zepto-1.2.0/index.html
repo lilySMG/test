@@ -13,14 +13,14 @@
             width: 150px;
             height: 150px;
             background-color: #f00;
-            font-size:40px;
+            font-size: 40px;
         }
 
         .huadong {
             width: 100%;
             height: 800px;
             background-color: #0f0;
-            font-size:40px;
+            font-size: 40px;
         }
     </style>
 </head>
@@ -35,14 +35,46 @@
     <script>
         $(function () {
             $('#tap').tap(function () {
-                $(this).html(parseInt($(this).html())+1);
+                $(this).html(parseInt($(this).html()) + 1);
             })
-            $('.huadong').swipeLeft(function () {
-                  $(this).html($(this).html()-1);
-            })
-            $('.huadong').swipeRight(function () {
-                $(this).html(parseInt($(this).html())+1);
-            })
+            $('.huadong').addEventListener('touchstart', touchStartFunc, false);
+            $('.huadong').addEventListener('touchmove', touchMoveFunc, false);
+            $('.huadong').addEventListener('touchend', touchEndFunc, false);
+            function touchPos(e) {
+                var touches = e.changedTouches, l = touches.length, touch, tagX, tagY;
+                for (var i = 0; i < l; i++) {
+                    touch = touches[i];
+                    tagX = touch.clientX;
+                    tagY = touch.clientY;
+                }
+                oPosition.x = tagX;
+                oPosition.y = tagY;
+                return oPosition;
+            }//获取触点位置
+
+            function touchStartFunc(e) {
+                touchPos(e);
+                startX = oPosition.x;
+                startY = oPosition.y;
+                temPos = $this.position().left;
+            }//触摸开始
+
+            function touchMoveFunc(e) {
+                touchPos(e);
+                var moveX = oPosition.x - startX;
+                var moveY = oPosition.y - startY;
+                if (Math.abs(moveY) < Math.abs(moveX)) {
+                    e.preventDefault();
+                }
+            }//触摸移动 
+            function touchEndFunc(e) {
+                touchPos(e);
+                var moveX = oPosition.x - startX;
+                var moveY = oPosition.y - startY;
+                if (Math.abs(moveX) > 5) {
+                    moveX > 0 ? $(this).html(parseInt($(this).html())+1) : $(this).html(parseInt($(this).html())-1);;
+                }
+            }//触摸结束
 
         })
     </script>
