@@ -40,7 +40,8 @@
             $('.huadong').addEventListener('touchstart', touchStartFunc, false);
             $('.huadong').addEventListener('touchmove', touchMoveFunc, false);
             $('.huadong').addEventListener('touchend', touchEndFunc, false);
-            function touchPos(e) {
+        })
+         function touchPos(e) {
                 var touches = e.changedTouches, l = touches.length, touch, tagX, tagY;
                 for (var i = 0; i < l; i++) {
                     touch = touches[i];
@@ -75,8 +76,6 @@
                     moveX > 0 ? $(this).html(parseInt($(this).html())+1) : $(this).html(parseInt($(this).html())-1);;
                 }
             }//触摸结束
-
-        })
     </script>
 </body>
 
